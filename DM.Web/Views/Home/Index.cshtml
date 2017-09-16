@@ -26,7 +26,7 @@
                     <td>@item.ClassDescription</td>
                     <td>
                         @Html.ActionLink("Edit", "EditClass", "Home", new { IdClass = item.Id }, new { @class = "btn btn-primary" })
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Delete</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="/Home/DeleteClass?IdClass=@item.Id" >Delete</button>
                         @*@Html.ActionLink("Delete", "DeleteClass", "Home", new { IdClass = item.Id }, new { @class = "btn btn-danger btnDeleteClass" })*@
                     </td>
                 </tr>
@@ -51,6 +51,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                @*@Html.ActionLink("Delete", "DeleteClass", "Home", new { IdClass = item.Id }, new { @class = "btn btn-danger btn-ok" })*@
                 <a class="btn btn-danger btn-ok">Delete</a>
             </div>
         </div>
@@ -58,9 +59,10 @@
 </div>
 
 
-@*@section Scripts
-{
-    <script>
-
-    </script>
-}*@
+<script>
+    $(function (e) {
+        $('#confirm-delete').on('show.bs.modal', function (e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    })
+</script>
