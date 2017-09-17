@@ -101,5 +101,12 @@ namespace DM.Web.Controllers
 
             return Json(new { exist = result });
         }
+
+        public ActionResult Detail(int IdClass)
+        {
+            var classModelObject = _dmService.getDetailClassById(IdClass);
+
+            return View(classModelObject);
+        }
     }
 }

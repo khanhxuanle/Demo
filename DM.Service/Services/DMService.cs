@@ -143,5 +143,44 @@ namespace DM.Service.Services
             _dmContext.SaveChanges();
 
         }
+
+        public void DeleteStudent(int IdStudent)
+        {
+            var studentDeleteObject = _dmContext.Students.FirstOrDefault(m => m.id == IdStudent);
+
+            _dmContext.Entry(studentDeleteObject).State = System.Data.Entity.EntityState.Deleted;
+
+            _dmContext.SaveChanges();
+        }
+
+        public ClassModel getDetailClassById(int IdClass)
+        {
+            var classObjectById = _dmContext.Classes.FirstOrDefault(m => m.Id == IdClass);
+
+            var classModelObjectById = new ClassModel
+            {
+                Id = classObjectById.Id,
+                ClassName = classObjectById.ClassName,
+                ClassDescription = classObjectById.ClassDescription,
+            };
+
+            classModelObjectById.Students = new List<StudentModel>();
+
+            foreach (var item in classObjectById.Students.ToList())
+            {
+                classModelObjectById.Students.Add(new StudentModel
+                {
+                    id = item.id,
+                    StudentName = item.StudentName,
+                    StudentAddress = item.StudentAddress,
+                    StudentAge = item.StudentAge,
+                    StudentSex = item.StudentSex,
+                    ClassId = classObjectById.Id,
+                    ClassName = classObjectById.ClassName
+                });
+            }
+
+            return classModelObjectById;
+        }
     }
 }

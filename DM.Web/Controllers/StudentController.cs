@@ -99,7 +99,7 @@ namespace DM.Web.Controllers
             if(ModelState.IsValid)
             {
                 _dMService.UpdateStudent(studentModelObject);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Student");
             }
 
             var listClass = _dMService.getAllClass();
@@ -117,5 +117,12 @@ namespace DM.Web.Controllers
 
             return View();
         }
-    }
+
+        public ActionResult DeleteStudent(int IdStudent)
+        {
+            _dMService.DeleteStudent(IdStudent);
+
+            return RedirectToAction("Index", "Student");
+        }
+    } 
 }

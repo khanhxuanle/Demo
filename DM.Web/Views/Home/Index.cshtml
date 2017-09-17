@@ -19,7 +19,7 @@
 <hr />
 
 <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover table-listClass">
         <thead>
             <tr>
                 <th>ID</th>
@@ -119,6 +119,10 @@
 
             return false;
 
+        });
+
+        $(".table-listClass").on("dblclick", "tr", function () {
+            window.location.href = '/Home/Detail/' + $(this).find('td:first').text();
         });
     })
 </script>

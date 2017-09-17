@@ -18,6 +18,9 @@ namespace DM.Service.IServices
 
         ClassModel getClassById(int IdClass);
 
+
+        ClassModel getDetailClassById(int IdClass);
+
         void EditClass(ClassModel classObject);
 
         void DeleteClass(int IdClass);
@@ -31,6 +34,8 @@ namespace DM.Service.IServices
         StudentModel getStudentById(int IdStudent);
 
         void UpdateStudent(StudentModel classObject);
+
+        void DeleteStudent(int IdStudent);
 
     }
 }

@@ -17,5 +17,7 @@ namespace DM.Models.Models
 
         [StringLength(500)]
         public string ClassDescription { get; set; }
+
+        public List<StudentModel> Students { get; set; }
     }
 }
