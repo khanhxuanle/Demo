@@ -1,4 +1,5 @@
 ﻿using DM.Data;
+using DM.Models.Models;
 using DM.Service.IServices;
 using System;
 using System.Collections.Generic;
@@ -26,37 +27,48 @@ namespace DM.Web.Controllers
         [HttpGet]
         public ActionResult EditClass(int IdClass)
         {
-            var classObjectById = _dmService.getClassById(IdClass);
-            return View(classObjectById);
+            var classModelObjectById = _dmService.getClassById(IdClass);
+            return View(classModelObjectById);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditClass(Class classObject)
+        public ActionResult EditClass(ClassModel classModelObject)
         {
-            _dmService.EditClass(classObject);
-            return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                _dmService.EditClass(classModelObject);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
         [HttpGet]
         public ActionResult NewClass()
         {
-            var newClassObject = new Class();
-            return View(newClassObject);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult NewClassObject(Class newClassObject)
+        public ActionResult NewClass(ClassModel newClassModelObject)
         {
-            var classOject = new Class {
-                ClassName = newClassObject.ClassName,
-                ClassDescription = newClassObject.ClassDescription
-            };
+            if (ModelState.IsValid)
+            {
+                var classModelOject = new ClassModel
+                {
+                    ClassName = newClassModelObject.ClassName,
+                    ClassDescription = newClassModelObject.ClassDescription
+                };
 
-            _dmService.InsertClass(classOject);
+                _dmService.InsertClass(classModelOject);
 
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+
         }
 
         public ActionResult DeleteClass(int IdClass)
@@ -77,6 +89,17 @@ namespace DM.Web.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CheckExistClass()
+        {
+            string result = string.Empty;
+            var listClass = _dmService.getAllClass();
+
+            result = listClass.Count == 0 ? "false" : "true";
+
+            return Json(new { exist = result });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DM.Data;
+using DM.Models.Models;
 using DM.Service.IServices;
 using System;
 using System.Collections.Generic;
@@ -21,32 +22,48 @@ namespace DM.Service.Services
             return "Hello Word";
         }
 
-        public void InsertClass(Class classObject)
+        public void InsertClass(ClassModel classModelObject)
         {
+            var classObject = new Class
+            {
+                ClassName = classModelObject.ClassName,
+                ClassDescription = classModelObject.ClassDescription
+            };
+
             _dmContext.Classes.Add(classObject);
             _dmContext.SaveChanges();
         }
 
-        public List<Class> getAllClass()
+        public List<ClassModel> getAllClass()
         {
             var listClass = _dmContext.Classes.ToList();
-            return listClass;
+            var listClassModelObject = new List<ClassModel>();
+
+            foreach(var item in listClass)
+            {
+                listClassModelObject.Add(new ClassModel { Id =  item.Id,  ClassName = item.ClassName, ClassDescription = item.ClassDescription });
+            }
+
+            return listClassModelObject;
         }
 
-        public Class getClassById(int IdClass)
+        public ClassModel getClassById(int IdClass)
         {
             var classObjectById = _dmContext.Classes.FirstOrDefault(m => m.Id == IdClass);
-            return classObjectById;
+
+            var classModelObjectById = new ClassModel { Id = classObjectById.Id, ClassName = classObjectById.ClassName, ClassDescription = classObjectById.ClassDescription };
+
+            return classModelObjectById;
         }
 
-        public void EditClass(Class classObject)
+        public void EditClass(ClassModel classModelObject)
         {
-            var classEditObject = _dmContext.Classes.FirstOrDefault(m => m.Id == classObject.Id);
+            var classEditObject = _dmContext.Classes.FirstOrDefault(m => m.Id == classModelObject.Id);
 
             if(classEditObject != null)
             {
-                classEditObject.ClassName = classObject.ClassName;
-                classEditObject.ClassDescription = classObject.ClassDescription;
+                classEditObject.ClassName = classModelObject.ClassName;
+                classEditObject.ClassDescription = classModelObject.ClassDescription;
             }
 
             _dmContext.Entry(classEditObject).State = System.Data.Entity.EntityState.Modified;
@@ -62,6 +79,69 @@ namespace DM.Service.Services
 
             _dmContext.SaveChanges();
             
+        }
+
+        public void InsertStudent(StudentModel studentModelObject)
+        {
+            var studentObject = new Student
+            {
+                ClassId = studentModelObject.ClassId,
+                StudentName = studentModelObject.StudentName,
+                StudentAddress = studentModelObject.StudentAddress,
+                StudentAge = studentModelObject.StudentAge,
+                StudentSex = studentModelObject.StudentSex
+            };
+
+            _dmContext.Students.Add(studentObject);
+            _dmContext.SaveChanges();
+        }
+
+        public List<StudentModel> getAllStudent()
+        {
+            var listStudent = _dmContext.Students.ToList();
+
+            var listStudentModel = new List<StudentModel>();
+
+            foreach(var item in listStudent)
+            {
+                listStudentModel.Add(new StudentModel { id = item.id, ClassId = item.ClassId, StudentAddress = item.StudentAddress, StudentAge = item.StudentAge, StudentName = item.StudentName, StudentSex = item.StudentSex, ClassName = item.Class.ClassName });
+            }
+
+            return listStudentModel;
+        }
+
+        public string ClassName(int classID)
+        {
+            var className = _dmContext.Classes.Where(m => m.Id == classID).Select(m => m.ClassName).SingleOrDefault();
+            return className;
+        }
+
+        public StudentModel getStudentById(int IdStudent)
+        {
+            var studentObjectById = _dmContext.Students.FirstOrDefault(m => m.id == IdStudent);
+
+            var studentModelObjectById = new StudentModel { id = studentObjectById.id, ClassId = studentObjectById.ClassId, StudentAddress = studentObjectById.StudentAddress, StudentAge = studentObjectById.StudentAge, StudentName = studentObjectById.StudentName, StudentSex = studentObjectById.StudentSex, ClassName = studentObjectById.Class.ClassName };
+
+            return studentModelObjectById;
+        }
+
+        public void UpdateStudent(StudentModel studentModelObject)
+        {
+            var studentObject = _dmContext.Students.FirstOrDefault(m => m.id == studentModelObject.id);
+
+            if (studentObject != null)
+            {
+                studentObject.StudentName = studentModelObject.StudentName;
+                studentObject.StudentAge = studentModelObject.StudentAge;
+                studentObject.StudentAddress = studentModelObject.StudentAddress;
+                studentObject.StudentSex = studentModelObject.StudentSex;
+                studentObject.ClassId = studentModelObject.ClassId;
+            }
+
+            _dmContext.Entry(studentObject).State = System.Data.Entity.EntityState.Modified;
+
+            _dmContext.SaveChanges();
+
         }
     }
 }

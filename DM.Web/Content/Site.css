@@ -26,3 +26,11 @@ textarea {
 h1 {
     text-align: center !important;
 }
+
+.action-header {
+    display: inline-block;
+}
+
+.action-new {
+    float: right;
+}

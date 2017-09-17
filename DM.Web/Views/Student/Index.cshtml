@@ -1,10 +1,9 @@
 ﻿@using DM.Models.Models
-@model List<ClassModel>
+@model List<StudentModel>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "List Student";
 }
-
 
 <div class="app-header">
     <div class="action-header  action-manage">
@@ -23,8 +22,12 @@
         <thead>
             <tr>
                 <th>ID</th>
+                
+                <th>Student Name</th>
+                <th>Student Age</th>
+                <th>Student Adress</th>
+                <th>Sex</th>
                 <th>Class Name</th>
-                <th>Description</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -32,12 +35,15 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Id</td>
+                    <td>@item.id</td>                  
+                    <td>@item.StudentName</td>
+                    <td>@item.StudentAge</td>
+                    <td>@item.StudentAddress</td>
+                    <td>@item.StudentSex</td>
                     <td>@item.ClassName</td>
-                    <td>@item.ClassDescription</td>
                     <td>
-                        @Html.ActionLink("Edit", "EditClass", "Home", new { IdClass = item.Id }, new { @class = "btn btn-primary" })
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="/Home/DeleteClass?IdClass=@item.Id" >Delete</button>
+                        @Html.ActionLink("Edit", "EditStudent", "Student", new { IdStudent = item.id }, new { @class = "btn btn-primary" })
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="/Student/DeleteStudent?IdStudent=@item.id">Delete</button>
                         @*@Html.ActionLink("Delete", "DeleteClass", "Home", new { IdClass = item.Id }, new { @class = "btn btn-danger btnDeleteClass" })*@
                     </td>
                 </tr>
@@ -102,7 +108,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Home/CheckExistClass",
-                dataType: "json", 
+                dataType: "json",
                 success: function (data) {
                     if (data.exist == "true") {;
                         window.location.href = $('.btn-newStudent').attr('href');
@@ -122,3 +128,4 @@
         });
     })
 </script>
+

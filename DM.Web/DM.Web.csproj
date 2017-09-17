@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,6 +164,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,7 +211,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Home\EditClass.cshtml" />
+    <Content Include="Views\Student\NewStudent.cshtml" />
     <Content Include="Views\Home\NewClass.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\EditStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -234,6 +239,10 @@
     <ProjectReference Include="..\DM.Data\DM.Data.csproj">
       <Project>{53c9d3e8-cb01-4114-96ad-35ba9179004d}</Project>
       <Name>DM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DM.Models\DM.Models.csproj">
+      <Project>{7cc24fef-b63d-40b2-a995-fa7f11fa43cd}</Project>
+      <Name>DM.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\DM.Service\DM.Service.csproj">
       <Project>{c9f5ef45-ba89-438d-8d0c-d7e4486ad277}</Project>

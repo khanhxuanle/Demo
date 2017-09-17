@@ -1,4 +1,5 @@
 ﻿using DM.Data;
+using DM.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,25 @@ namespace DM.Service.IServices
     {
         string HellWord();
 
-        void InsertClass(Class classObject);
+        void InsertClass(ClassModel classObject);
 
-        List<Class> getAllClass();
+        List<ClassModel> getAllClass();
 
-        Class getClassById(int IdClass);
+        ClassModel getClassById(int IdClass);
 
-        void EditClass(Class classObject);
+        void EditClass(ClassModel classObject);
 
         void DeleteClass(int IdClass);
+
+        void InsertStudent(StudentModel studentModelObject);
+
+        List<StudentModel> getAllStudent();
+
+        string ClassName(int classID);
+
+        StudentModel getStudentById(int IdStudent);
+
+        void UpdateStudent(StudentModel classObject);
 
     }
 }
